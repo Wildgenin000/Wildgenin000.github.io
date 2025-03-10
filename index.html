@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting and Searching Algorithms in C</title>
+    <style>
+        /* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
+    line-height: 1.6;
+}
+
+header {
+    background: #1a237e; /* Dark blue background for header */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.content {
+    padding: 20px;
+}
+
+h2 {
+    color: #64b5f6; /* Light blue for subheadings */
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #2979ff; /* Bright blue color for links */
+    font-weight: bold;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+    color: #0288d1; /* Darker blue on hover */
+}
+
+pre {
+    background: #1e1e1e; /* Dark background for code blocks */
+    color: #e0e0e0; /* Light text for code */
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace; /* Monospaced font for code */
+}
+
+footer {
+    background-color: #1a237e; /* Dark blue footer background */
+    color: #e0e0e0; /* Light footer text */
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    header h1 {
+        font-size: 2rem;
+        margin: 10px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+        margin: 10px;
+    }
+
+    ul li {
+        margin: 5px 0;
+    }
+
+    pre {
+        font-size: 0.9rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sorting and Searching Algorithms in C by Pietriș Mario Gabriel</h1>
+    </header>
+    <div class="content">
+        <section class="algorithms">
+            <h2>7 Sorting Algorithms in C</h2>
+            <ul>
+                <li><a href="#bubbleSort">Bubble Sort</a></li>
+                <li><a href="#selectionSort">Selection Sort</a></li>
+                <li><a href="#insertionSort">Insertion Sort</a></li>
+                <li><a href="#mergeSort">Merge Sort</a></li>
+                <li><a href="#quickSort">Quick Sort</a></li>
+                <li><a href="#heapSort">Heap Sort</a></li>
+                <li><a href="#radixSort">Radix Sort</a></li>
+            </ul>
+        </section>
+        <section class="algorithms">
+            <h2>3 Searching Algorithms in C</h2>
+            <ul>
+                <li><a href="#linearSearch">Linear Search</a></li>
+                <li><a href="#binarySearch">Binary Search</a></li>
+                <li><a href="#jumpSearch">Jump Search</a></li>
+            </ul>
+        </section>
+
+        <!-- Bubble Sort -->
+        <section id="bubbleSort">
+            <h3>Bubble Sort (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void bubbleSort(int arr[], int n) {
+    int sortat;
+    do
+    {
+        sortat = 1;
+        for(int i = 0; i < n-1; i++)
+            if(arr[i] > arr[i+1])
+            {
+                int temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+                sortat = 0;
+            }
+    }
+    while(!sortat);
+}
+            </code></pre>
+        </section>
+
+        <!-- Selection Sort -->
+        <section id="selectionSort">
+            <h3>Selection Sort (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        int minIdx = i;
+        for (int j = i+1; j < n; j++) {
+            if (arr[j] < arr[minIdx]) {
+                minIdx = j;
+            }
+        }
+        int temp = arr[minIdx];
+        arr[minIdx] = arr[i];
+        arr[i] = temp;
+    }
+}
+            </code></pre>
+        </section>
+
+        <!-- Insertion Sort -->
+        <section id="insertionSort">
+            <h3>Insertion Sort (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+            </code></pre>
+        </section>
+
+        <!-- Merge Sort -->
+        <section id="mergeSort">
+            <h3>Merge Sort (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void merge(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = (left + right) / 2;
+        merge(arr, left, mid);
+        merge(arr, mid + 1, right);
+        // Merge two sorted subarrays
+    }
+}
+
+void mergeSort(int arr[], int n) {
+    merge(arr, 0, n - 1);
+}
+            </code></pre>
+        </section>
+
+        <!-- Quick Sort -->
+        <section id="quickSort">
+            <h3>Quick Sort (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+            </code></pre>
+        </section>
+
+        <!-- Heap Sort -->
+        <section id="heapSort">
+            <h3>Heap Sort (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void heapify(int arr[], int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i) {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        heapify(arr, n, largest);
+    }
+}
+
+void heapSort(int arr[], int n) {
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    for (int i = n - 1; i >= 0; i--) {
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        heapify(arr, i, 0);
+    }
+}
+            </code></pre>
+        </section>
+
+        <!-- Radix Sort -->
+        <section id="radixSort">
+            <h3>Radix Sort (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int getMax(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+void countingSort(int arr[], int n, int exp) {
+    int output[n];
+    int count[10] = {0};
+
+    for (int i = 0; i < n; i++) {
+        count[(arr[i] / exp) % 10]++;
+    }
+
+    for (int i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+        count[(arr[i] / exp) % 10]--;
+    }
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = output[i];
+    }
+}
+
+void radixSort(int arr[], int n) {
+    int max = getMax(arr, n);
+    for (int exp = 1; max / exp > 0; exp *= 10) {
+        countingSort(arr, n, exp);
+    }
+}
+            </code></pre>
+        </section>
+
+        <!-- Linear Search -->
+        <section id="linearSearch">
+            <h3>Linear Search (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int linearSearch(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            return i; // Return the index of the found element
+        }
+    }
+    return -1; // Element not found
+}
+            </code></pre>
+        </section>
+
+        <!-- Binary Search -->
+        <section id="binarySearch">
+            <h3>Binary Search (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int binarySearch(int arr[], int low, int high, int key) {
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == key) {
+            return mid; // Element found
+        }
+        if (arr[mid] < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1; // Element not found
+}
+            </code></pre>
+        </section>
+
+        <!-- Jump Search -->
+        <section id="jumpSearch">
+            <h3>Jump Search (C Code)</h3>
+            <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+
+int jumpSearch(int arr[], int n, int key) {
+    int step = sqrt(n);
+    int prev = 0;
+
+    while (arr[fmin(step, n) - 1] < key) {
+        prev = step;
+        step += sqrt(n);
+        if (prev >= n) {
+            return -1; // Element not found
+        }
+    }
+
+    for (int i = prev; i < fmin(step, n); i++) {
+        if (arr[i] == key) {
+            return i; // Element found
+        }
+    }
+    return -1; // Element not found
+}
+            </code></pre>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Algorithms Showcase</p>
+    </footer>
+    <script>
+        // Add JavaScript functionality if needed, like smooth scroll or code highlighting.
+
+document.querySelectorAll('a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
+ 

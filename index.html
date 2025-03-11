@@ -124,6 +124,9 @@ void insertionSort(int arr[], int n) {
 }`,
     "Merge Sort": `
 // Merge Sort in C
+#include <stdio.h>
+#include <stdlib.h>
+
 void merge(int arr[], int left, int mid, int right) {
     int i, j, k;
     int n1 = mid - left + 1;
@@ -215,6 +218,9 @@ void quickSort(int arr[], int low, int high) {
 }`,
     "Heap Sort": `
 // Heap Sort in C
+#include <stdio.h>
+#include <stdlib.h>
+
 void heapify(int arr[], int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
@@ -242,6 +248,9 @@ void heapSort(int arr[], int n) {
 }`,
     "Radix Sort": `
 // Radix Sort in C
+#include <stdio.h>
+#include <stdlib.h>
+
 int getMax(int arr[], int n) {
     int max = arr[0];
     for (int i = 1; i < n; i++)
@@ -270,6 +279,9 @@ void radixSort(int arr[], int n) {
 }`,
     "Linear Search": `
 // Linear Search in C
+#include <stdio.h>
+#include <stdlib.h>
+
 int linearSearch(int arr[], int n, int x) {
     for (int i = 0; i < n; i++)
         if (arr[i] == x)
@@ -278,6 +290,9 @@ int linearSearch(int arr[], int n, int x) {
 }`,
     "Binary Search": `
 // Binary Search in C
+#include <stdio.h>
+#include <stdlib.h>
+
 int binarySearch(int arr[], int l, int r, int x) {
     while (l <= r) {
         int m = l + (r - l) / 2;

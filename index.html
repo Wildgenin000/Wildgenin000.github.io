@@ -69,7 +69,7 @@ li { cursor: pointer;}
     const algorithms = {
     "Bubble Sort": `
 // Bubble Sort in C
-#include &lt;stdio.h&gt;
+#include <stdio.h>
 #include <stdlib.h>
 
 void bubbleSort(int arr[], int n) {
@@ -205,6 +205,7 @@ int partition(int arr[], int low, int high) {
     arr[high] = temp;
     return (i + 1);
 }
+
 void quickSort(int arr[], int low, int high) {
     if (low < high) {
         int pi = partition(arr, low, high);
@@ -287,10 +288,13 @@ int binarySearch(int arr[], int l, int r, int x) {
         else
             r = m - 1;
     }
-    return -1;
+    return -1; // Element not found
 }`,
     "Jump Search": `
 // Jump Search in C
+#include <stdio.h>
+#include <stdlib.h>
+
 int min(int a, int b) { return (a < b) ? a : b; }
 int jumpSearch(int arr[], int x, int n) {
     int step = sqrt(n);

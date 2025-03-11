@@ -69,6 +69,9 @@ li { cursor: pointer;}
     const algorithms = {
     "Bubble Sort": `
 // Bubble Sort in C
+#include <stdio.h>
+#include <stdlib.h>
+
 void bubbleSort(int arr[], int n) {
     int sortat;
     do
@@ -87,6 +90,9 @@ void bubbleSort(int arr[], int n) {
 }`,
     "Selection Sort": `
 // Selection Sort in C
+#include <stdio.h>
+#include <stdlib.h>
+
 void selectionSort(int arr[], int n) {
     for (int i = 0; i < n-1; i++) {
         int minIndex = i;
@@ -102,6 +108,9 @@ void selectionSort(int arr[], int n) {
 }`,
     "Insertion Sort": `
 // Insertion Sort in C
+#include <stdio.h>
+#include <stdlib.h>
+
 void insertionSort(int arr[], int n) {
     for (int i = 1; i < n; i++) {
         int key = arr[i];
@@ -115,46 +124,71 @@ void insertionSort(int arr[], int n) {
 }`,
     "Merge Sort": `
 // Merge Sort in C
-void merge(int arr[], int l, int m, int r) {
-    int n1 = m - l + 1;
-    int n2 = r - m;
-    int L[n1], R[n2];
-    for (int i = 0; i < n1; i++)
-        L[i] = arr[l + i];
-    for (int j = 0; j < n2; j++)
-        R[j] = arr[m + 1 + j];
-    int i = 0, j = 0, k = l;
+void merge(int arr[], int left, int mid, int right) {
+    int i, j, k;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // Create temporary arrays
+    int leftArr[n1], rightArr[n2];
+
+    // Copy data to temporary arrays
+    for (i = 0; i < n1; i++)
+        leftArr[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        rightArr[j] = arr[mid + 1 + j];
+
+    // Merge the temporary arrays back into arr[left..right]
+    i = 0;
+    j = 0;
+    k = left;
     while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
+        if (leftArr[i] <= rightArr[j]) {
+            arr[k] = leftArr[i];
             i++;
-        } else {
-            arr[k] = R[j];
+        }
+        else {
+            arr[k] = rightArr[j];
             j++;
         }
         k++;
     }
+
+    // Copy the remaining elements of leftArr[], if any
     while (i < n1) {
-        arr[k] = L[i];
+        arr[k] = leftArr[i];
         i++;
         k++;
     }
+
+    // Copy the remaining elements of rightArr[], if any
     while (j < n2) {
-        arr[k] = R[j];
+        arr[k] = rightArr[j];
         j++;
         k++;
     }
 }
-void mergeSort(int arr[], int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
-        mergeSort(arr, l, m);
-        mergeSort(arr, m + 1, r);
-        merge(arr, l, m, r);
+
+// The subarray to be sorted is in the index range [left-right]
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+      
+        // Calculate the midpoint
+        int mid = left + (right - left) / 2;
+
+        // Sort first and second halves
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        // Merge the sorted halves
+        merge(arr, left, mid, right);
     }
 }`,
     "Quick Sort": `
 // Quick Sort in C
+#include <stdio.h>
+#include <stdlib.h>
+
 int partition(int arr[], int low, int high) {
     int pivot = arr[high];
     int i = (low - 1);
@@ -238,8 +272,8 @@ void radixSort(int arr[], int n) {
 int linearSearch(int arr[], int n, int x) {
     for (int i = 0; i < n; i++)
         if (arr[i] == x)
-            return i;
-    return -1;
+            return i; // Return the index of the found element
+    return -1; // Element not found
 }`,
     "Binary Search": `
 // Binary Search in C
@@ -247,7 +281,7 @@ int binarySearch(int arr[], int l, int r, int x) {
     while (l <= r) {
         int m = l + (r - l) / 2;
         if (arr[m] == x)
-            return m;
+            return m; // Element found
         if (arr[m] < x)
             l = m + 1;
         else

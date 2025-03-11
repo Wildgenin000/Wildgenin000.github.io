@@ -113,13 +113,13 @@ void selectionSort(int arr[], int n) {
 
 void insertionSort(int arr[], int n) {
     for (int i = 1; i < n; i++) {
-        int key = arr[i];
+        int x = arr[i];
         int j = i - 1;
-        while (j >= 0 && arr[j] > key) {
+        while (j >= 0 && arr[j] > x) {
             arr[j + 1] = arr[j];
             j = j - 1;
         }
-        arr[j + 1] = key;
+        arr[j + 1] = x;
     }
 }`,
     "Merge Sort": `
@@ -127,64 +127,69 @@ void insertionSort(int arr[], int n) {
 #include <stdio.h>
 #include <stdlib.h>
 
-void merge(int arr[], int left, int mid, int right) {
-    int i, j, k;
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+void merge_left_right(int *vector, int left, int middle, int right)
+{
+    int iterator_left, iterator_right, merge_iterator;
+    int no_elements_left = middle - left + 1;
+    int no_elements_right = right - middle;
 
-    // Create temporary arrays
-    int leftArr[n1], rightArr[n2];
+    // Create temporary array
+    int *vector_left = calloc(no_elements_left, sizeof(int));
+    int *vector_right = calloc(no_elements_right, sizeof(int));
 
-    // Copy data to temporary arrays
-    for (i = 0; i < n1; i++)
-        leftArr[i] = arr[left + i];
-    for (j = 0; j < n2; j++)
-        rightArr[j] = arr[mid + 1 + j];
+    // Copy the information from the initial vector to the left, respectively right vector
+    for (iterator_left = 0; iterator_left < no_elements_left; iterator_left++)
+        vector_left[iterator_left] = vector[left + iterator_left];
+    for (iterator_right = 0; iterator_right < no_elements_right; iterator_right++)
+        vector_right[iterator_right] = vector[middle + 1 + iterator_right];
 
-    // Merge the temporary arrays back into arr[left..right]
-    i = 0;
-    j = 0;
-    k = left;
-    while (i < n1 && j < n2) {
-        if (leftArr[i] <= rightArr[j]) {
-            arr[k] = leftArr[i];
-            i++;
+    // merge vectors (interclasare)
+    iterator_left = 0;
+    iterator_right = 0;
+    merge_iterator = left;
+    while (iterator_left < no_elements_left && iterator_right < no_elements_right)
+    {
+        if ( *(vector_left + iterator_left) <= *(vector_right + iterator_right) )
+        {
+            *(vector + merge_iterator) = *(vector_left + iterator_left);
+            iterator_left++;
         }
-        else {
-            arr[k] = rightArr[j];
-            j++;
+        else
+        {
+            *(vector + merge_iterator) = *(vector_right + iterator_right);
+            iterator_right++;
         }
-        k++;
+        merge_iterator++;
     }
 
-    // Copy the remaining elements of leftArr[], if any
-    while (i < n1) {
-        arr[k] = leftArr[i];
-        i++;
-        k++;
+    if (iterator_left < no_elements_left) {
+        //Copy the remaining elements of left vector, if there are any
+        while (iterator_left < no_elements_left) {
+            *(vector + merge_iterator) = *(vector_left + iterator_left);
+            iterator_left++;
+            merge_iterator++;
+        }
+    }else{
+        // Copy the remaining elements of the right vector, if there are any
+        while (iterator_right < no_elements_right) {
+            *(vector + merge_iterator) = *(vector_right + iterator_right);;
+            iterator_right++;
+            merge_iterator++;
+        }
     }
-
-    // Copy the remaining elements of rightArr[], if any
-    while (j < n2) {
-        arr[k] = rightArr[j];
-        j++;
-        k++;
-    }
+    //delete the temporary vectors from memory
+    free(vector_left);
+    free(vector_right);
 }
 
-// The subarray to be sorted is in the index range [left-right]
-void mergeSort(int arr[], int left, int right) {
-    if (left < right) {
-      
-        // Calculate the midpoint
-        int mid = left + (right - left) / 2;
+void merge_sort(int *arr, int left, int right){
+    int middle;
 
-        // Sort first and second halves
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
-
-        // Merge the sorted halves
-        merge(arr, left, mid, right);
+    if (left != right){
+        middle = (left + right) / 2;
+        merge_sort(vector, left, middle);
+        merge_sort(vector, middle + 1, right);
+        merge_left_right(vector, left, middle, right);
     }
 }`,
     "Quick Sort": `

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Ultimate</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Lista de sarcini</h1>
+            <button id="themeToggle" class="icon-btn" aria-label="Schimbă tema">🌙</button>
+        </div>
+        
+        <div class="input-section">
+            <textarea id="taskInput" rows="1" placeholder="Ce ai de făcut astăzi?" aria-label="Introdu o sarcină nouă"></textarea>
+            <button id="addTaskBtn" aria-label="Adaugă sarcina">Adaugă</button>
+        </div>
+        <p class="hint">Apasă <strong>Ctrl + Enter</strong> pentru a salva.</p>
+
+        <div class="filters">
+            <button data-filter="all" class="filter-btn active">Toate</button>
+            <button data-filter="active" class="filter-btn">Active</button>
+            <button data-filter="completed" class="filter-btn">Finalizate</button>
+        </div>
+
+        <ul id="taskList">
+            </ul>
+        
+        <div id="announcer" aria-live="polite" class="sr-only"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

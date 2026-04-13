@@ -622,12 +622,8 @@
       if (stored) {
         try { tasks = JSON.parse(stored) || []; } catch(e) { tasks = []; }
       } else {
-        tasks = [
-          { id: Date.now() - 100000, text: '✨ Bun venit în aplicația ta de sarcini!', completed: false },
-          { id: Date.now() - 200000, text: '✔️ Poți scrie pe mai multe rânduri\nîn această textare inteligentă.', completed: true },
-          { id: Date.now() - 300000, text: '🌙 Încearcă și modul întunecat — butonul din dreapta sus.', completed: false },
-          { id: Date.now() - 400000, text: '📊 Bara de progres și filtrele sunt aici!', completed: false },
-        ];
+        // Pornim cu lista goală – fără sarcini demonstrative
+        tasks = [];
       }
     }
 
